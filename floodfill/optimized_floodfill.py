@@ -9,10 +9,8 @@ import sys
 # Standard Floodfill: Runs to center once, exploring as it goes.
 #
 # Optimized (3 phases):
-#   PHASE 1 - Exploration Run: Navigate to center using floodfill,
-#             mapping ALL walls discovered along the way.
-#   PHASE 2 - Return Run: Go back to start (0,0) using the built map.
-#             Continue mapping any new walls found.
+#   PHASE 1 - Exploration Run: Navigate to center using floodfill, mapping ALL walls discovered along the way.
+#   PHASE 2 - Return Run: Go back to start (0,0) using the built map. Continue mapping any new walls found.
 #   PHASE 3 - Speed Run: Run to center using the currently known shortest path.
 #
 # WHY IT'S BETTER:
@@ -211,8 +209,8 @@ def navigate_to(start_x, start_y, start_facing, target_cells, phase_name, color)
 
 # =====================================================================
 # SPEED RUN (Phase 3)
-# The maze is now fully mapped — follow the shortest path directly.
-# No wall sensing needed, no recalculation — pure speed!
+# The maze is now mapped — follow the shortest path directly.
+# No wall sensing needed, no recalculation — pure speed
 # =====================================================================
 def speed_run(start_x, start_y, start_facing, target_cells):
     """
@@ -232,13 +230,13 @@ def speed_run(start_x, start_y, start_facing, target_cells):
     API.setColor(x, y, 'B')  # Blue = start
 
     while (x, y) not in target_cells:
-        # Sense walls — recalculate only if new wall found
+        # Sense walls, recalculate only if new wall found
         walls_before = str(walls[x][y])
         update_walls(x, y, facing)
         if str(walls[x][y]) != walls_before:
             recalculate_flood(target_cells)
 
-        # NO wall sensing in speed run — we already know the maze!
+        # NO wall sensing in speed run, we already know the maze
         nx, ny = get_best_neighbor(x, y)
 
         if nx is None:
@@ -299,7 +297,7 @@ def main():
     log("=== OPTIMIZED FLOODFILL COMPLETE ===")
     log(f"Phase 1 (Explore to center): {p1_steps} steps")
     log(f"Phase 2 (Return to start):   {p2_steps} steps")
-    log(f"Phase 3 (Speed run):         {p3_steps} steps  ← compare this to standard floodfill!")
+    log(f"Phase 3 (Speed run):         {p3_steps} steps")
     log(f"Total steps all phases:      {total_steps}")
     log(f"Unique cells visited:        {len(visited_cells)}")
 
