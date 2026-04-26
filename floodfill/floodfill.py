@@ -6,7 +6,7 @@ import sys
 # =====================================================================
 # HOW FLOODFILL WORKS:
 #
-# Imagine the maze as a grid. The CENTER cells get value 0.
+# The CENTER cells get value 0.
 # Every cell gets a number = its distance to the center.
 # The mouse always moves to the neighbor with the LOWEST number.
 # When it hits a wall it didn't know about, it RECALCULATES the numbers.
@@ -30,9 +30,8 @@ walls = [[{'N': False, 'S': False, 'E': False, 'W': False}
          for _ in range(MAZE_SIZE)]
 
 # --- DIRECTION HELPERS ---
-# The mouse has a "facing" direction. We track it so we know
-# which way is "front", "left", "right" relative to the maze.
-DIRECTIONS = ['N', 'E', 'S', 'W']  # In clockwise order
+# The mouse has a "facing" direction. We track it so we know which way is "front", "left", "right" relative to the maze.
+DIRECTIONS = ['N', 'E', 'S', 'W']  
 
 visited = [[0] * MAZE_SIZE for _ in range(MAZE_SIZE)]
 INF = MAZE_SIZE * MAZE_SIZE
@@ -80,7 +79,7 @@ def get_accessible_neighbors(x, y):
     return neighbors
 
 # =====================================================================
-# STEP 3: RECALCULATE FLOOD VALUES (The core of Floodfill!)
+# STEP 3: RECALCULATE FLOOD VALUES 
 # After discovering a new wall, recalculate all flood values.
 # This uses BFS starting from the center outward.
 # =====================================================================
@@ -89,7 +88,7 @@ def recalculate_flood():
     # Reset all values to a large number first
     for x in range(MAZE_SIZE):
         for y in range(MAZE_SIZE):
-            flood[x][y] = MAZE_SIZE * MAZE_SIZE  # "infinity"
+            flood[x][y] = MAZE_SIZE * MAZE_SIZE  # infinity
 
     # Start BFS from center cells (value = 0)
     if MAZE_SIZE == 16:
@@ -116,8 +115,7 @@ def recalculate_flood():
 
 # =====================================================================
 # STEP 4: UPDATE WALLS FROM SENSOR READINGS
-# Ask the simulator what walls the mouse currently sees,
-# then store that info in our walls grid.
+# Ask the simulator what walls the mouse currently sees, then store that info in our walls grid.
 # =====================================================================
 def update_walls(x, y, facing):
     """Read sensors and record any walls found around current cell."""
@@ -126,8 +124,7 @@ def update_walls(x, y, facing):
     wall_left  = API.wallLeft()
     wall_right = API.wallRight()
 
-    # Convert relative sensor directions to absolute maze directions
-    # based on which way the mouse is currently facing
+    # Convert relative sensor directions to absolute maze directions based on which way the mouse is currently facing
     front_dir = facing
     left_dir  = DIRECTIONS[(DIRECTIONS.index(facing) - 1) % 4]
     right_dir = DIRECTIONS[(DIRECTIONS.index(facing) + 1) % 4]
@@ -166,8 +163,7 @@ def opposite(direction):
 
 # =====================================================================
 # STEP 5: CHOOSE BEST MOVE
-# Look at all accessible neighbors and move to the one with
-# the LOWEST flood value — that's the best path toward center.
+# Look at all accessible neighbors and move to the one with the LOWEST flood value, that's the best path toward center.
 # =====================================================================
 def get_best_neighbor(x, y):
     neighbors = get_accessible_neighbors(x, y)
