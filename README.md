@@ -1,7 +1,7 @@
 # Micromouse Maze Simulation
 
 **Course:** Interfacing Techniques - ENCS4380  
-Birzeit University — Electrical and Computer Engineering Department  
+Birzeit University — Electrical and Computer Engineering Department 
 
 
 ---
